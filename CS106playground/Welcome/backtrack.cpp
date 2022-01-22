@@ -16,7 +16,7 @@ void diceRolls(int dice);
 void diceSum(int dice, int desiredSum);
 void sublists(Vector<string>& v);
 
-int main() {
+int main4() {
 
 //    cout << "printBinary(3):" << endl;
 //    printBinary(3);

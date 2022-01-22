@@ -17,13 +17,22 @@
 using namespace std;
 void cantorSet(GWindow& window, int x, int y, int length, int levels);
 void kochSnowflake(GWindow& window, int x, int y, int size, int levels);
+void dropSandOn(Grid<int>& world, int row, int col);
 
-int main3()
+int main()
 {
-    GWindow window(800, 600);
-    window.setWindowTitle("CS 106B/X Fractals");
-    window.setColor("Black");
-    cantorSet(window, 100, 100, 500, 8);
+    Grid<int> before = {
+        { 3, 3, 3 },
+        { 3, 3, 3 },
+        { 3, 3, 3 }
+    };
+    dropSandOn(before, 1,1);
+    cout << before << endl;
+
+//    GWindow window(800, 600);
+//    window.setWindowTitle("CS 106B/X Fractals");
+//    window.setColor("Black");
+//    cantorSet(window, 100, 100, 500, 8);
     return 0;
 
 }
@@ -38,5 +47,20 @@ void cantorSet(GWindow& window, int x, int y, int length, int levels) {
 
 
 
+    }
+}
+
+void dropSandOn(Grid<int>& world, int row, int col) {
+    if (!world.inBounds(row,col)) {
+        return;
+    }
+    if (world[row][col] < 3) {
+        world[row][col] += 1;
+    } else {
+        world[row][col]=0;
+        dropSandOn(world, row, col-1);
+        dropSandOn(world, row, col+1);
+        dropSandOn(world, row+1, col);
+        dropSandOn(world, row-1, col);
     }
 }
