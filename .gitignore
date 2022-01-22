@@ -16,7 +16,8 @@
 **/*.dll
 **/*.dylib
 
-**/*.app/
+**/*.app/*
+**/Contents/
 
 # Qt-es
 object_script.*.Release
