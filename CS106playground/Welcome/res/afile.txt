@@ -1,0 +1,2 @@
+Hands-On Embedded Programming with C++17:
+Create versatile and robust embedded solutions for MCUs and RTOSes with modern C++
