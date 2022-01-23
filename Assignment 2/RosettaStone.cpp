@@ -2,13 +2,29 @@
 #include "GUI/SimpleTest.h"
 using namespace std;
 
-Map<string, double> kGramsIn(const string& str, int kGramLength) {
+Map<string, double> kGramsIn(const string& str, int k) {
     /* TODO: Delete this comment and the other lines here, then implement
      * this function.
      */
-    (void) str;
-    (void) kGramLength;
-    return {};
+    Map<string, double> res;
+
+    if (k<=0) {
+        error("kGramlength should be positive");
+    }
+    if (str.length() < k) {
+        return {};
+    }
+    if (str.length() == k) {
+        res[str]+=1;
+        return res;
+    }
+    int i = 0;
+    while (i <= str.length()-k) {
+        res[str.substr(i,k)] +=1;
+        i++;
+    }
+
+    return res;
 }
 
 Map<string, double> normalize(const Map<string, double>& input) {
