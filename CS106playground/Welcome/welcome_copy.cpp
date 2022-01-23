@@ -28,6 +28,12 @@ int main()
     };
     dropSandOn(before, 1,1);
     cout << before << endl;
+    bool up = true;
+    bool down = !up;
+
+    up = false;
+
+    cout << down << endl;
 
 //    GWindow window(800, 600);
 //    window.setWindowTitle("CS 106B/X Fractals");
