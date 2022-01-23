@@ -1,5 +1,6 @@
 #include "RosettaStone.h"
 #include "GUI/SimpleTest.h"
+#include <cmath>
 using namespace std;
 
 Map<string, double> kGramsIn(const string& str, int k) {
@@ -31,8 +32,23 @@ Map<string, double> normalize(const Map<string, double>& input) {
     /* TODO: Delete this comment and the other lines here, then implement
      * this function.
      */
-    (void) input;
-    return {};
+    Map<string, double> res;
+    if (input.isEmpty()) {
+        error("Input Map is empty");
+    }
+    double total = 0;
+    for (string str: input) {
+        total += pow(input[str], 2);
+    }
+    if (total==0) {
+        error("sum is zero");
+    }
+    total = sqrt(total);
+    for (string str: input) {
+        double t = input[str];
+        res.put(str, t/total);
+    }
+    return res;
 }
 
 Map<string, double> topKGramsIn(const Map<string, double>& source, int numToKeep) {
