@@ -5,5 +5,11 @@
 - [X] P1. Stack Overflows
 - [X] P2. Only Connect
 - [X] P3. Playing Fair
-- [ ] P4. Sandpiles
-- [ ] P5. Plotter
+- [X] P4. Sandpiles
+- [X] P5. Plotter
+
+## Assignment 2 Fun with Collections
+
+- [ ] P1. Rosetta Stone
+- [ ] P2. Rising Tides
+
