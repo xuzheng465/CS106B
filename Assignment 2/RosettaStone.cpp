@@ -5,9 +5,6 @@
 using namespace std;
 
 Map<string, double> kGramsIn(const string& str, int k) {
-    /* TODO: Delete this comment and the other lines here, then implement
-     * this function.
-     */
     Map<string, double> res;
 
     if (k<=0) {
@@ -30,9 +27,6 @@ Map<string, double> kGramsIn(const string& str, int k) {
 }
 
 Map<string, double> normalize(const Map<string, double>& input) {
-    /* TODO: Delete this comment and the other lines here, then implement
-     * this function.
-     */
     Map<string, double> res;
     if (input.isEmpty()) {
         error("Input Map is empty");
@@ -53,9 +47,6 @@ Map<string, double> normalize(const Map<string, double>& input) {
 }
 
 Map<string, double> topKGramsIn(const Map<string, double>& source, int numToKeep) {
-    /* TODO: Delete this comment and the other lines here, then implement
-     * this function.
-     */
     int sourceSize = source.size();
     if (numToKeep < 0) {
         error("numToKeep should be positive");
@@ -70,10 +61,12 @@ Map<string, double> topKGramsIn(const Map<string, double>& source, int numToKeep
     for (string key: source) {
         pq.enqueue(key, source[key]);
     }
+
     Map<string, double> res;
     for (int i = 0; i < sourceSize - numToKeep; i++) {
         pq.dequeue();
     }
+
     while(!pq.isEmpty()) {
         string key = pq.dequeue();
         res[key] = source[key];
@@ -84,22 +77,30 @@ Map<string, double> topKGramsIn(const Map<string, double>& source, int numToKeep
 }
 
 double cosineSimilarityOf(const Map<string, double>& lhs, const Map<string, double>& rhs) {
-    /* TODO: Delete this comment and the other lines here, then implement
-     * this function.
-     */
-    (void) lhs;
-    (void) rhs;
-    return {};
+    double res = 0;
+    for (string key: lhs) {
+        if (rhs.containsKey(key)) {
+            res += lhs[key]*rhs[key];
+        }
+    }
+    return res;
 }
 
 string guessLanguageOf(const Map<string, double>& textProfile,
                        const Set<Corpus>& corpora) {
-    /* TODO: Delete this comment and the other lines here, then implement
-     * this function.
-     */
-    (void) textProfile;
-    (void) corpora;
-    return "";
+    if (corpora.isEmpty()) {
+        error("corpora should not be empty");
+    }
+    double maxScore = 0;
+    string language = "";
+    for (Corpus c : corpora) {
+        double score = cosineSimilarityOf(textProfile, c.profile);
+        if (score > maxScore) {
+            maxScore = score;
+            language = c.name;
+        }
+    }
+    return language;
 }
 
 
