@@ -1,17 +1,94 @@
 #include "RisingTides.h"
 #include "GUI/SimpleTest.h"
 #include "queue.h"
+#include "set.h"
+
 using namespace std;
+
 
 Grid<bool> floodedRegionsIn(const Grid<double>& terrain,
                             const Vector<GridLocation>& sources,
                             double height) {
-    /* TODO: Delete this line and the next four lines, then implement this function. */
-    (void) terrain;
-    (void) sources;
-    (void) height;
-    return {};
+
+    int numRows = terrain.numRows();
+    int numCols = terrain.numCols();
+    Grid<bool> res(numRows, numCols, false);
+    if (sources.isEmpty()) {
+        return res;
+    }
+
+    Queue<GridLocation> queue;
+    Set<GridLocation> visited;
+
+    for (GridLocation location: sources) {
+        if (terrain[location.row][location.col] <= height) {
+            res[location.row][location.col] = true;
+            visited.add(location);
+            queue.enqueue(location);
+        }
+    }
+
+    while (!queue.isEmpty()) {
+        GridLocation curLocation = queue.dequeue();
+        Vector<GridLocation> adjs;
+
+        if (terrain.inBounds(curLocation.row+1,curLocation.col) && !visited.contains({curLocation.row+1,curLocation.col})) {
+            GridLocation t(curLocation.row+1, curLocation.col);
+            adjs.add(t);
+            visited.add(t);
+        }
+        if (terrain.inBounds(curLocation.row-1,curLocation.col) && !visited.contains({curLocation.row-1,curLocation.col})) {
+            GridLocation t(curLocation.row-1, curLocation.col);
+            adjs.add(t);
+            visited.add(t);
+        }
+        if (terrain.inBounds(curLocation.row,curLocation.col+1) && !visited.contains({curLocation.row,curLocation.col+1})) {
+            GridLocation t(curLocation.row, curLocation.col+1);
+            adjs.add(t);
+            visited.add(t);
+        }
+        if (terrain.inBounds(curLocation.row,curLocation.col-1) && !visited.contains({curLocation.row,curLocation.col-1})) {
+            GridLocation t(curLocation.row, curLocation.col-1);
+            adjs.add(t);
+            visited.add(t);
+        }
+        for (GridLocation l: adjs) {
+            if (terrain[l.row][l.col]<=height) {
+                res[l.row][l.col] = true;
+                queue.enqueue(l);
+            }
+        }
+
+    }
+
+    return res;
 }
+
+//Vector<GridLocation> getAdjacents(Grid<bool> grid, Set<GridLocation>& visited, GridLocation location) {
+//    Vector<GridLocation> res;
+//    if (grid.inBounds(location.row+1,location.col) && !visited.contains(location)) {
+//        GridLocation t(location.row+1, location.col);
+//        res.add(t);
+//        visited.add(t);
+//    }
+//    if (grid.inBounds(location.row-1,location.col) && !visited.contains(location)) {
+//        GridLocation t(location.row-1, location.col);
+//        res.add(t);
+//        visited.add(t);
+//    }
+//    if (grid.inBounds(location.row,location.col+1) && !visited.contains(location)) {
+//        GridLocation t(location.row, location.col+1);
+//        res.add(t);
+//        visited.add(t);
+//    }
+//    if (grid.inBounds(location.row,location.col-1) && !visited.contains(location)) {
+//        GridLocation t(location.row, location.col-1);
+//        res.add(t);
+//        visited.add(t);
+//    }
+
+//    return res;
+//}
 
 
 /***** Test Cases Below This Point *****/

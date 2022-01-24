@@ -10,6 +10,10 @@
 
 ## Assignment 2 Fun with Collections
 
-- [ ] P1. Rosetta Stone
-- [ ] P2. Rising Tides
+- [x] P1. Rosetta Stone
+- [x] P2. Rising Tides
+
+
+
+In the Rising Tides, Breadth first search is utilized.
 
