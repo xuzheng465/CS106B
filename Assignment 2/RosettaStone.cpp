@@ -1,5 +1,6 @@
 #include "RosettaStone.h"
 #include "GUI/SimpleTest.h"
+#include "priorityqueue.h"
 #include <cmath>
 using namespace std;
 
@@ -55,9 +56,31 @@ Map<string, double> topKGramsIn(const Map<string, double>& source, int numToKeep
     /* TODO: Delete this comment and the other lines here, then implement
      * this function.
      */
-    (void) source;
-    (void) numToKeep;
-    return {};
+    int sourceSize = source.size();
+    if (numToKeep < 0) {
+        error("numToKeep should be positive");
+    }
+    if (numToKeep > sourceSize) {
+        return source;
+    }
+    if (numToKeep == 0) {
+        return {};
+    }
+    PriorityQueue<string> pq;
+    for (string key: source) {
+        pq.enqueue(key, source[key]);
+    }
+    Map<string, double> res;
+    for (int i = 0; i < sourceSize - numToKeep; i++) {
+        pq.dequeue();
+    }
+    while(!pq.isEmpty()) {
+        string key = pq.dequeue();
+        res[key] = source[key];
+    }
+
+
+    return res;
 }
 
 double cosineSimilarityOf(const Map<string, double>& lhs, const Map<string, double>& rhs) {
